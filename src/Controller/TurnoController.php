@@ -32,7 +32,7 @@ class TurnoController
         if(!isset($cola)){
             throw new NotFoundHttpException('La cola no existe!');
         }
-        $pet = $this->turnoRepository->findOneBy(['id' => $id]);
+        $ = $this->turnoRepository->findOneBy(['id' => $id]);
 
         $data = [
             'id' => $pet->getId(),
