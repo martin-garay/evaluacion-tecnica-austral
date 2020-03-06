@@ -48,6 +48,17 @@ class TurnoController
         ];
         return new JsonResponse($data, Response::HTTP_OK);
     }
+
+     /**
+     * @Route("atender_proximo/", name="atender_proximo", methods={"GET"})
+     */
+    public function atenderProximo(): JsonResponse
+    {
+        $data = [
+            'mensaje'=>'hola'
+        ];
+        return new JsonResponse($data, Response::HTTP_OK);
+    }
     
             
 }
