@@ -35,15 +35,20 @@ class TurnoController
         if(!$cola){
             throw new NotFoundHttpException('La cola no existe!');
         }
-        //inserto el turno y devuelvo los datos del turno (id,numero,fecha_creacion,id_cola)        
                 
-        $this->turnoRepository->sacarTurno($cola);        
+        $turno = $this->turnoRepository->sacarTurno($cola);        
+        if(!$turno){
+            throw new BadRequestHttpException('Error al crear el turno');
+        }
 
         $data = [
-            'id_cola' => $cola->getId()
+            'id' => $turno->getId(),
+            'id_cola' => $cola->getId(),
+            'fecha_creacion' => $turno->getFechaCreacion(),
         ];
-        return new JsonResponse($data, Response::HTTP_OK);    
+        return new JsonResponse($data, Response::HTTP_OK);
     }
+    
             
 }
 

@@ -26,13 +26,13 @@ class TurnoRepository extends ServiceEntityRepository
         $turno = new Turno();
 
         $turno
-            ->setCola($cola)
-            
+            ->setCola($cola)            
             ->setAtendido(false)
             ->setFechaAtendido(null);
 
         $this->manager->persist($turno);
         $this->manager->flush();
+        return $turno;
     }
 
     // /**
