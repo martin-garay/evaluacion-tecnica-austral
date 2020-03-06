@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Turno;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @method Turno|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +15,24 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class TurnoRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $manager;
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $manager)
     {
         parent::__construct($registry, Turno::class);
+        $this->manager = $manager;
+    }
+
+    public function sacarTurno($cola){
+        $turno = new Turno();
+
+        $turno
+            ->setCola($cola)            
+            ->setAtendido(false)
+            ->setFechaAtendido(null);
+
+        $this->manager->persist($turno);
+        $this->manager->flush();
+        return $turno;
     }
 
     // /**
