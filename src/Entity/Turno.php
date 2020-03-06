@@ -10,13 +10,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  
 /**
- * @ApiResource(
- *     normalizationContext={"groups"={"get"}},
- *     itemOperations={
- *         "get"
- *         
- *     }
- * )
  * @ORM\Entity(repositoryClass="App\Repository\TurnoRepository")
  */
 class Turno
@@ -24,8 +17,7 @@ class Turno
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     * @Groups({"get", "put"})
+     * @ORM\Column(type="integer")    
      */
     private $id;
 
@@ -49,6 +41,11 @@ class Turno
      * @ORM\JoinColumn(nullable=false)
      */
     private $cola;
+
+    public function __construct()
+    {
+        $this->fecha_creacion = new \DateTime(); 
+    }
 
     public function getId(): ?int
     {
@@ -102,4 +99,5 @@ class Turno
 
         return $this;
     }
+    
 }

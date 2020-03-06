@@ -2,6 +2,7 @@
 namespace App\Controller;
 use App\Repository\TurnoRepository;
 use App\Repository\ColaRepository;
+use App\Entity\Turno;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,55 +13,38 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class PetController
  * @package App\Controller
  *
- * @Route(path="/api/sacar_turno")
+ * @Route(path="/api/")
  */
 class TurnoController
 {
     private $turnoRepository;
+    private $colaRepository;
 
-    public function __construct(TurnoRepository $turnoRepository)
+    public function __construct(TurnoRepository $turnoRepository,ColaRepository $colaRepository)
     {
         $this->turnoRepository = $turnoRepository;
+        $this->colaRepository = $colaRepository;
     }
 
     /**
      * @Route("sacar_turno/{id_cola}", name="sacar_un_turno", methods={"GET"})
      */
-    public function get($id_cola): JsonResponse
+    public function sacarTurno($id_cola): JsonResponse
     {
-        $cola = $this->ColaRepository->findOneBy(['id' => $id_cola]);
-        if(!isset($cola)){
+        $cola = $this->colaRepository->findOneBy(['id' => $id_cola]);
+        if(!$cola){
             throw new NotFoundHttpException('La cola no existe!');
         }
-        $ = $this->turnoRepository->findOneBy(['id' => $id]);
+        //inserto el turno y devuelvo los datos del turno (id,numero,fecha_creacion,id_cola)        
+                
+        $this->turnoRepository->sacarTurno($cola);        
 
         $data = [
-            'id' => $pet->getId(),
-            'name' => $pet->getName(),
-            'type' => $pet->getType(),
-            'photoUrls' => $pet->getPhotoUrls(),
+            'id_cola' => $cola->getId()
         ];
-
-        return new JsonResponse($data, Response::HTTP_OK);
+        return new JsonResponse($data, Response::HTTP_OK);    
     }
-
-    public function add(Request $request): JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
-
-        $name = $data['name'];
-        $type = $data['type'];
-        $photoUrls = $data['photoUrls'];
-
-        if (empty($name) || empty($type)) {
-            throw new NotFoundHttpException('Expecting mandatory parameters!');
-        }
-
-        $this->petRepository->savePet($name, $type, $photoUrls);
-
-        return new JsonResponse(['status' => 'Pet created!'], Response::HTTP_CREATED);
-    }
-
+            
 }
 
 ?>
