@@ -5,7 +5,8 @@ namespace App\Repository;
 use App\Entity\Turno;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\Cola\ColaInterface;
+// use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @method Turno|null find($id, $lockMode = null, $lockVersion = null)
@@ -15,11 +16,12 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class TurnoRepository extends ServiceEntityRepository
 {
-    private $manager;
-    public function __construct(ManagerRegistry $registry, EntityManagerInterface $manager)
+    private $cola;
+
+    public function __construct(ManagerRegistry $registry, ColaInterface $cola)
     {
-        parent::__construct($registry, Turno::class);
-        $this->manager = $manager;
+        parent::__construct($registry, Turno::class);        
+        $this->cola = $cola;
     }
 
     public function sacarTurno($cola){
@@ -30,37 +32,25 @@ class TurnoRepository extends ServiceEntityRepository
             ->setAtendido(false)
             ->setFechaAtendido(null);
 
-        $this->manager->persist($turno);
-        $this->manager->flush();
+        $em = $this->getEntityManager();
+        $em->persist($turno);
+        $em->flush();
         return $turno;
     }
+    /**
+    * @return Turno Return an Turno object
+    */    
+    function atenderProximo(){
+        $turno = $this->cola->siguiente($this);
+        if(!$turno){
+            return null;
+        }        
+        $turno->atender();
 
-    // /**
-    //  * @return Turno[] Returns an array of Turno objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $em = $this->getEntityManager();
+        $em->persist($turno);
+        $em->flush();
+        return $turno;        
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Turno
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

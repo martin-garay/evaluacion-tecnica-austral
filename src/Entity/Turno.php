@@ -99,5 +99,9 @@ class Turno
 
         return $this;
     }
-    
+    public function atender(){
+        $this->setAtendido(true);
+        $this->setFechaAtendido(new \DateTime());
+        
+    }
 }
