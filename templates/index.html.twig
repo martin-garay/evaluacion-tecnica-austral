@@ -1,0 +1,33 @@
+    {# templates/index.html.twig #}
+
+    {% extends 'base.html.twig' %}
+
+    {% block body %}
+    <style>
+        body {
+            font-family: "Lucida Console", monospace, sans-serif;
+            padding: 30px;
+        }
+    </style>
+        <h2 align="center" id="visitorCount">{{ visitorCount }}</h2>
+        <p align="center">person(s) currently viewing this page</p>
+    {% endblock %}
+
+
+{% block javascripts %}
+    <script src="https://js.pusher.com/4.2/pusher.min.js"></script>
+    <script>
+
+    let pusher = new Pusher("{{ pusherKey }}", {
+        cluster: "{{ pusherCluster }}",
+    });
+    let channelName = Date.now() + Math.random().toString(36).replace(/\W+/g, '');
+    pusher.subscribe(channelName);
+    pusher.subscribe("visitor-updates")
+        .bind('update', function (data) {
+            console.log(data)
+            let newCount = data.newCount;
+            document.getElementById('visitorCount').textContent = newCount;
+        });
+    </script>
+{% endblock %}
