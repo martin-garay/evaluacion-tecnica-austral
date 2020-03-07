@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-
+use App\Service\Cola\ColaInterface;
 /**
  * Class PetController
  * @package App\Controller
@@ -32,8 +32,8 @@ class TurnoController
     public function sacarTurno($id_cola): JsonResponse
     {
         $cola = $this->colaRepository->findOneBy(['id' => $id_cola]);
-        if(!$cola){
-            throw new NotFoundHttpException('La cola no existe!');
+        if(!$cola){            
+            return new JsonResponse("La cola no existe", Response::HTTP_NOT_FOUND);
         }
                 
         $turno = $this->turnoRepository->sacarTurno($cola);        
@@ -54,11 +54,17 @@ class TurnoController
      */
     public function atenderProximo(): JsonResponse
     {
+        $turno = $this->turnoRepository->atenderProximo();
+        if(!$turno){
+            return new JsonResponse("No hay turno siguiente!", Response::HTTP_NOT_FOUND);            
+        }
         $data = [
-            'mensaje'=>'hola'
+            'id_turno'=> $turno->getId(),
+            'id_cola' => $turno->getCola()->getId()
         ];
         return new JsonResponse($data, Response::HTTP_OK);
     }
+
     
             
 }
