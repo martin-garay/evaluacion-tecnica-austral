@@ -1,0 +1,61 @@
+{# templates/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
+    <script src="./js/wheatherstack/index.js"></script>
+    <script>
+        $('#wheater').WeatherStack();
+
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher("{{ pusherKey }}", {
+            cluster: "{{ pusherCluster }}",
+        });
+
+        var channel = pusher.subscribe('turnos-channel');
+
+        channel.bind('actualizar', function(data) {  
+            console.log(data);
+            document.getElementById('total_personas').textContent = data[0].total_personas;
+            document.getElementById('total_atendidos').textContent = data[0].total_atendidos;
+            document.getElementById('total_no_atendidos').textContent = data[0].total_no_atendidos;
+        });
+
+    </script>
+
+
+{% endblock %}
+
+{% block body %}
+<div id="wheater"></div>    
+<div>
+    <div>                
+        <div class="totalizador"><h2 align="center" id="total_personas">{{ total_personas }}</h2></div>
+        <p align="center">Cantidad de personas que solicitaron un turno</p>
+    </div>
+    <div>
+        <h2 align="center" id="total_atendidos">{{ total_atendidos }}</h2>
+        <p align="center">Cantidad Atendidos</p>
+        
+    </div>
+    <div>
+        <h2 align="center" id="total_no_atendidos">{{ total_no_atendidos }}</h2>
+        <p align="center">Cantidad no atendidos</p>
+        
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block stylesheets %}
+
+
+{% endblock %}
