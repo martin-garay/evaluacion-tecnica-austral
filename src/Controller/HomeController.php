@@ -2,62 +2,23 @@
 
 namespace App\Controller;
 
-use Psr\SimpleCache\CacheInterface;
 use Pusher\Pusher;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Psr\Cache\CacheItemPoolInterface;
+use App\Repository\TurnoRepository;
 
 class HomeController extends AbstractController
-{
-    /**
-     * Cache instance
-     * @var Psr\SimpleCache\CacheInterface
-     */
-    public function __construct(CacheItemPoolInterface $cache)
+{    
+    public function index(TurnoRepository $turnoRepository)
     {
-        $this->cache = $cache;
-    }
-
-    public function index()
-    {
-        $visitorCount = $this->getVisitorCount();
+    	//$estadistica = $turnoRepository->getEstadistica();
         return $this->render('index.html.twig', [
             'pusherKey' => $this->getParameter('pusherKey'),
             'pusherCluster' => $this->getParameter('pusherCluster'),
-            'visitorCount' => $visitorCount,
-        ]);
+            'total_personas' => $turnoRepository->getCantidadTurnos(),
+            'total_atendidos' => $turnoRepository->getCantidadAtendidos(),
+            'total_no_atendidos' => $turnoRepository->getCantidadNoAtendidos()
+        ]);        
     }
-
-    public function webhook(Request $request, Pusher $pusher)
-    {
-        $events = json_decode($request->getContent(), true)['events'];
-        var_dump($events);
-        $visitorCount = $this->getVisitorCount();
-        foreach ($events as $event) {
-            // ignore any events from our public channel--it's only for broadcasting
-            if ($event['channel'] === 'visitor-updates') {
-                continue;
-            }
-            $visitorCount += ($event['name'] === 'channel_occupied') ? 1 : -1;
-        }
-            // save new figure and notify all clients
-            $this->saveVisitorCount($visitorCount);
-            $pusher->trigger('visitor-updates', 'update', [
-                'newCount' => 1,
-            ]);
-        return new Response();
-    }
-
-    private function getVisitorCount()
-    {
-        return $this->cache->get('visitorCount',function(){ return 0; });
-    }
-
-    private function saveVisitorCount($visitorCount)
-    {
-        $this->cache->set('visitorCount', $visitorCount);
-    }
-
 }

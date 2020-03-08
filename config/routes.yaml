@@ -1,9 +1,3 @@
 index:
     path: /home
     controller: App\Controller\HomeController::index
-
-webhook:
-        path: /webhook
-        methods:
-        - post
-        controller: App\Controller\HomeController::webhook
