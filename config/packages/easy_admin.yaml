@@ -13,4 +13,9 @@ easy_admin:
       Turno:
         class: App\Entity\Turno
 
+    user:
+        display_name: true
+        name_property_path: 'email'
+        display_avatar: false
+
 #- { property: 'category', type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\Category' } }
