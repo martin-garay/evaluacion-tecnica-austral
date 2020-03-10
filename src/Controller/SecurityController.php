@@ -21,6 +21,14 @@ class SecurityController extends AbstractController
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
+    /**
+     * @Route("/login_denied_access", name="app_login_denied_access")
+     */
+    public function login_denied_access(AuthenticationUtils $authenticationUtils): Response
+    {               
+        $this->addFlash('error', "El usuario no tiene privilegios para acceder a la opción. Contactese con el Administrador");
+        return $this->redirectToRoute('api_logout');
+    }
 
     // /**
     //  * @Route("/logout", name="app_logout")

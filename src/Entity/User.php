@@ -7,7 +7,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 use Symfony\Component\Serializer\Annotation\Groups;
-
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields={"email"}, message="Ya existe una cuenta con este email")
@@ -27,6 +27,18 @@ class User implements UserInterface
      * @Groups("api")
      */
     private $email;
+
+    /**
+     * @var string|null
+     */
+    protected $plainPassword;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $passwordRequestToken;
 
     /**
      * @ORM\Column(type="json")
@@ -116,5 +128,49 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+
+
+
+
+    /**
+     * @return null|string
+     */
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param null|string $plainPassword
+     *
+     * @return User
+     */
+    public function setPlainPassword(?string $plainPassword): User
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPasswordRequestToken(): ?string
+    {
+        return $this->passwordRequestToken;
+    }
+
+    /**
+     * @param null|string $passwordRequestToken
+     *
+     * @return User
+     */
+    public function setPasswordRequestToken(?string $passwordRequestToken): User
+    {
+        $this->passwordRequestToken = $passwordRequestToken;
+
+        return $this;
     }
 }
