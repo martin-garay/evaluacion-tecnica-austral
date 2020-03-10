@@ -1,0 +1,24 @@
+.weather-container{
+	font-size: 15px;
+	display: inline-block;
+	color:white;
+}
+.weather-location{
+	font-size: 20px;
+}
+.weather-img{
+	border-radius: 50%;
+}
+.weather-container-data{
+	display: inline-block;
+	float: right;
+}
+.weather-container-data-left{
+	float: left;
+	font-size: 20px;
+	font-weight: bold;
+	vertical-align: middle;
+}
+.weather-container-data-right{
+	float: right;
+}

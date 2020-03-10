@@ -16,6 +16,7 @@
         };
         var settings = $.extend(defaults, options );
 		var self = this;                         
+		
 		this.getData = function(callback){
 			$.ajax({
 			  url: 'http://api.weatherstack.com/current',
@@ -49,10 +50,11 @@
 				eData.className = "weather-container-data";
 				eDataLeftSide.className = "weather-container-data-left";
 				eDataRightSide.className = "weather-container-data-right";
+				eImg.className = "weather-img";
 				
 				eImg.src = data.current.weather_icons[0];
-				eDataLeftSide.appendChild(eImg);
-				eDataRightSide.appendChild(tDataRightSide);				
+				eDataLeftSide.appendChild(tDataRightSide);
+				eDataRightSide.appendChild(eImg);				
 
 				eData.appendChild(eDataLeftSide);
 				eData.appendChild(eDataRightSide);
@@ -62,32 +64,14 @@
 				eContainer.appendChild(eLocation);
 				eContainer.appendChild(eData);				
 				self.append(eContainer);	
-			}
-			
-
-			//if(data.location.name && )
-			//var msj = `Current temperature in ${data.location.name} is ${data.current.temperature}℃`;
-			//$(this).append(msj);
+			}		
 		}
-		// renderHtmlLocation(container){
-	 //          var eLocation = document.createElement('div'),
-  //             eJugadorNombre = document.createElement('div'),
-  //             eJugadorPuntaje = document.createElement('div'),
-  //             eJugadorActual = document.getElementById('jugador'+this.turnoActual);
-
-		// }
-		// renderLeftSide(){
-
-		// }		
-		this.getData(this.render);
-
-		// this.css({
-  //           color: settings.color,
-  //           backgroundColor: settings.backgroundColor
-  //       });
+		setInterval(console.log(1),1000);
+		setInterval(this.getData(this.render),3000);
 
 
- 
+
+		
     };
  
 }( jQuery ));
