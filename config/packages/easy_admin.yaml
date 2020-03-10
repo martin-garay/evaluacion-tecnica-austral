@@ -3,9 +3,9 @@ easy_admin:
     design:
         menu:            
             - TipoCola
-            - { entity: 'Cola', label: 'Colas', icon: 'share' }
-            - { entity: 'Turno', label: 'Turnos', icon: 'clock' }
-            - { entity: 'Usuario', icon: 'user' }
+            - { entity: 'Cola',     label: 'Colas',     icon: 'share' }
+            - { entity: 'Turno',    label: 'Turnos',    icon: 'clock' }
+            - { entity: 'Usuario',  label: 'Usuarios',     icon: 'user' }
     entities:
       TipoCola:
         class: App\Entity\TipoCola

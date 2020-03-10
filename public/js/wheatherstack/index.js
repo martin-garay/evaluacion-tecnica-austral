@@ -30,8 +30,8 @@
 
 		}
 		this.render = function(data){
-			console.log(data);
-			console.log(data.current.weather_icons[0]);
+			//console.log(data);
+			//console.log(data.current.weather_icons[0]);
 			if(data.location || data.current){
 
 				var ubicacion = data.location.name + ', ' + data.location.region + ', ' + data.location.country;
