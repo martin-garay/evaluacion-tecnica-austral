@@ -3,6 +3,13 @@
 {% block title %}Acceso al Administrador{% endblock %}
 
 {% block body %}
+
+{% for message in app.flashes('error') %}
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
+{% endfor %}
+
 <div id="login_container"> 
     <form method="post">
         {% if error %}
@@ -42,7 +49,8 @@
         
         
     </form>
-    <a href="/register">Registrarme</a>
+    <div><a href="/register">Registrarme</a></div>
+    <div><a href="/reset_password">Olvide mi contraseña</a></div>
 </div>
 {% endblock %}
 

@@ -73,7 +73,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            throw new CustomUserMessageAuthenticationException('Email no existe.');
         }
 
         return $user;
@@ -105,12 +105,10 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
     {
         return $this->urlGenerator->generate('app_login');
     }
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
-    //public function onAuthenticationFailure(Symfony\Component\HttpFoundation\Request $request, Symfony\Component\Security\Core\Exception\AuthenticationException $exception)
-    {
-       return new JsonResponse([
-           'error' => $exception->getMessageKey()
-       ], 400);
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)    
+    {    
+        $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
+        return new RedirectResponse($this->urlGenerator->generate('api_login',['error'=>'El usuario ó la contraseña no son validos']));
     }
 
     public function start(Request $request, AuthenticationException $authException = null)

@@ -33,6 +33,11 @@ easy_admin:
                             expanded: true
                             multiple: true
                             choices: { 'Usuario': 'ROLE_USER', 'Administrador': 'ROLE_ADMIN' }
+        list:
+                fields:
+                        - 'id'
+                        - 'email'
+                        - 'roles'
         
     user:
         display_name: true
