@@ -1,5 +1,11 @@
 easy_admin:
-    site_name: 'Administración de Colas'
+    site_name: 'Administrador'
+    design:
+        menu:            
+            - TipoCola
+            - { entity: 'Cola', label: 'Colas', icon: 'share' }
+            - { entity: 'Turno', label: 'Turnos', icon: 'clock' }
+            - { entity: 'Usuario', icon: 'user' }
     entities:
       TipoCola:
         class: App\Entity\TipoCola
@@ -12,7 +18,22 @@ easy_admin:
 
       Turno:
         class: App\Entity\Turno
+        disabled_actions: ['show','new','edit','delete']
 
+      Usuario:
+        class: App\Entity\User
+        disabled_actions: ['new']
+        form:
+                fields:
+                    - { property: 'email', type: 'email', type_options: { required: true } }
+                    - property: 'roles'
+                      type: 'choice'
+                      type_options:
+                            mapped: true
+                            expanded: true
+                            multiple: true
+                            choices: { 'Usuario': 'ROLE_USER', 'Administrador': 'ROLE_ADMIN' }
+        
     user:
         display_name: true
         name_property_path: 'email'

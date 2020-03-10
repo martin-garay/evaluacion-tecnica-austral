@@ -104,4 +104,8 @@ class Turno
         $this->setFechaAtendido(new \DateTime());
         
     }
+    public function __toString() {
+        return (string)"ID: ".$this->id ." - ". $this->fecha_creacion->format("d/m/Y H:i:s");
+    }
+
 }
