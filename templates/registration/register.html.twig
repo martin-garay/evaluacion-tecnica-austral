@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registración de usuarios{% endblock %}
+
+{% block body %}
+	<div id="register_container">	    
+	    <h1 class="h3 mb-3 font-weight-normal">Registración</h1>
+
+	    {{ form_start(registrationForm) }}
+	        {{ form_row(registrationForm.email) }}
+	        {{ form_row(registrationForm.plainPassword) }}
+	    
+			<div class="form-row">
+				<label class="form-check-label" for="registration_form_agreeTerms">Acepto Terminos</label>
+		    	{{ form_row(registrationForm.agreeTerms) }}  
+		    	
+		    	
+		  	</div>
+	        <button class="btn btn-primary">Registrarme</button>
+	    {{ form_end(registrationForm) }}
+	    <a href="/login">Volver</a>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+<style type="text/css">
+    .btn-primary{
+        margin: 10px 0 5px 0;
+    }
+    #registration_form_agreeTerms{
+    	margin-left: 7px;
+    }
+    ul{
+    	margin: 0;
+    	padding: 0;
+    }
+    li{
+    	list-style: none;
+    	color: red;
+    	font-size: 13px;
+    }
+    @media (min-width: 1281px) {
+         #register_container{
+            text-align: center;
+            margin: auto;
+            width: 25%;
+            background-color:aliceblue;
+            padding: 2vw;
+        }
+    }
+
+
+    @media (min-width: 1025px) and (max-width: 1280px) {
+        #register_container{
+            text-align: center;
+            margin: auto;
+            width: 25%;
+            background-color:
+            aliceblue;
+            padding: 1vw;
+        }
+    }
+    @media only screen and (max-width: 600px) {
+
+        #register_container{
+            text-align: center;
+            margin: auto;
+            background-color:
+            aliceblue;
+            padding: 1vw;
+        }
+    }
+
+</style>
+{% endblock %}
