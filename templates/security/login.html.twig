@@ -15,7 +15,7 @@
             </div>
         {% endif %}
 
-        <h1 class="h3 mb-3 font-weight-normal">Sign In</h1>
+        <h1 class="h3 mb-3 font-weight-normal">Administrador</h1>
         <label for="inputEmail">Email</label>
         <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
         <label for="inputPassword">Password</label>
@@ -37,9 +37,12 @@
         #}
 
         <button class="btn btn-lg btn-primary" type="submit">
-            Sign in
+            Ingresar
         </button>
+        
+        
     </form>
+    <a href="/register">Registrarme</a>
 </div>
 {% endblock %}
 
@@ -48,13 +51,16 @@
 {% block stylesheets %}
 
 <style type="text/css">
+    .btn-primary{
+        margin: 10px 0 5px 0;
+    }
     @media (min-width: 1281px) {
          #login_container{
             text-align: center;
             margin: auto;
             width: 25%;
             background-color:aliceblue;
-            padding: 1vw;
+            padding: 2vw;
         }
     }
 
