@@ -7,6 +7,7 @@ parameters:
     locale: 'en'
     pusherKey: '%env(PUSHER_KEY)%'
     pusherCluster: '%env(PUSHER_CLUSTER)%'
+    mailFromResetPassword: '%env(MAIL_FROM_RESET_PASSWORD)%'
     
 services:
     # default configuration for services in *this* file

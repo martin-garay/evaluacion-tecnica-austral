@@ -3,6 +3,7 @@
 {% block title %}Acceso al Administrador{% endblock %}
 
 {% block body %}
+{{ app.request.getBaseURL() }}
 
 {% for message in app.flashes('error') %}
     <div class="alert alert-danger">

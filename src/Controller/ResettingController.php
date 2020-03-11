@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ResettingController extends AbstractController
 {
@@ -32,11 +33,12 @@ class ResettingController extends AbstractController
                 $user->setPasswordRequestToken($token);
                 $entityManager->flush();
 
-
-                $link_reseteo = "http://localhost:8000/reset_password/confirm/$token";
+                $link_reseteo = $this->generateUrl('reset_password_confirm', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
+                $mail_from = $this->getParameter('mailFromResetPassword');
+                   
                 // send your email with SwiftMailer or anything else here
                 $message = (new \Swift_Message('Turnos. Restablecer Contraseña'))
-			        ->setFrom('test@unlu.edu.ar')
+			        ->setFrom($mail_from)
 			        ->setTo($email)
 			        ->setBody(
 			            $this->renderView(
