@@ -71,8 +71,14 @@ class Turno
 
     public function setAtendido(bool $atendido): self
     {
+
         $this->atendido = $atendido;
 
+        //actualizo la fecha de atencion
+        if($atendido)
+            $this->setFechaAtendido(new \DateTime());
+        else 
+            $this->setFechaAtendido(null);
         return $this;
     }
 

@@ -18,7 +18,14 @@ easy_admin:
 
       Turno:
         class: App\Entity\Turno
-        disabled_actions: ['show','new','edit','delete']
+        disabled_actions: ['show','new','delete']
+        list:
+            fields:
+                    - 'id'
+                    - 'fecha_creacion'
+                    - 'atendido'
+                    - 'cola'
+
 
       Usuario:
         class: App\Entity\User

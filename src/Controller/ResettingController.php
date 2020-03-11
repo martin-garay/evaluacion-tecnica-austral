@@ -56,6 +56,8 @@ class ResettingController extends AbstractController
                 $this->addFlash('success', "Se envio un mail a su casilla");
 
                 return $this->redirectToRoute('reset_password');
+            }else{
+                $this->addFlash('error', "El usario no existe");                
             }
         }
 

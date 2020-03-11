@@ -73,7 +73,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email no existe.');
+            throw new CustomUserMessageAuthenticationException('El email o la contraseña no son validas.');
         }
 
         return $user;
@@ -108,7 +108,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)    
     {    
         $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
-        return new RedirectResponse($this->urlGenerator->generate('api_login',['error'=>'El usuario ó la contraseña no son validos']));
+        return new RedirectResponse($this->urlGenerator->generate('api_login'));
     }
 
     public function start(Request $request, AuthenticationException $authException = null)
